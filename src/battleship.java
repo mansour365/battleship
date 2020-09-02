@@ -16,23 +16,23 @@ public class battleship
 	public static int cpuExtraTurns = 0;
 	public static int userExtraTurns = 0;
 	
-	public static void main (String[] args)
-	{
-		int[][] board = new int[8][8];			//Create the board 8 x 8 
-		
-		
-		initializeboard1(board);
-		
-		System.out.println("\nHello, and welcome to Battleship!");
-		System.out.println("\nThis is the battlefeild.\n");
-		showboard(board);
-		
-		PlaceTokens(board);
-		
-		showboard(board);
-		
-		userturn(board);
-	}
+//	public static void main (String[] args)
+//	{
+//		int[][] board = new int[8][8];			//Create the board 8 x 8 
+//		
+//		
+//		initializeboard1(board);
+//		
+//		System.out.println("\nHello, and welcome to Battleship!");
+//		System.out.println("\nThis is the battlefeild.\n");
+//		showboard(board);
+//		
+//		PlaceTokens(board);
+//		
+//		showboard(board);
+//		
+//		userturn(board);
+//	}
 	
 	
 	
@@ -40,7 +40,7 @@ public class battleship
 	 * 
 	 * @param board
 	 */
-	public static void initializeboard1(int[][] board)
+	public void initializeboard1(int[][] board)
 	{
 		for(int row = 0 ; row < 8 ; row++)
 			for(int column = 0 ; column < 8 ; column++)
@@ -52,7 +52,7 @@ public class battleship
 	 *  
 	 * @param board
 	 */
-	public static void PlaceTokens(int[][] board)
+	public void PlaceTokens(int[][] board)
 	{
 		char c;
 		int row, column = 0 ;
@@ -241,7 +241,7 @@ public class battleship
 	 * 
 	 * @param board
 	 */
-	public static void showboard(int[][] board)
+	public void showboard(int[][] board)
 	{
 		System.out.println("\n   A  B  C  D  E  F  G  H");
 		for(int row = 0 ; row < 8 ; row++)
@@ -282,7 +282,7 @@ public class battleship
 	 * 
 	 * @param board
 	 */
-	public static void userturn(int[][] board)
+	public void userturn(int[][] board)
 	{
 		Scanner kb = new Scanner(System.in);
 		System.out.println("Please choose a coordinate to fire a rocket!");
@@ -407,7 +407,7 @@ public class battleship
 	 * 
 	 * @param board
 	 */
-	public static void cputurn(int[][] board)
+	public void cputurn(int[][] board)
 	{
 		Random rand = new Random();
 		
@@ -499,7 +499,7 @@ public class battleship
 	 * 
 	 * @param board
 	 */
-	public static void youwin(int[][] board)
+	public void youwin(int[][] board)
 	{
 		System.out.println("\n..."
 				+ "\nafter a difficult, but fair game..."
@@ -512,7 +512,7 @@ public class battleship
 	 * 
 	 * @param board
 	 */
-	public static void youlose(int[][] board)
+	public void youlose(int[][] board)
 	{
 		System.out.println("\n..."
 				+ "\nafter a difficult, but fair game..."
