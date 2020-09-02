@@ -71,17 +71,17 @@ public class battleship
 				column = 0;
 			else if(c == 'B' || c == 'b')
 				column = 1;
-			else if(c == 'C' || c == 'b')
+			else if(c == 'C' || c == 'c')
 				column = 2;
-			else if(c == 'D' || c == 'c')
+			else if(c == 'D' || c == 'd')
 				column = 3;
-			else if(c == 'E' || c == 'd')
+			else if(c == 'E' || c == 'e')
 				column = 4;
-			else if(c == 'F' || c == 'e')
+			else if(c == 'F' || c == 'f')
 				column = 5;
-			else if(c == 'G' || c == 'f')
+			else if(c == 'G' || c == 'g')
 				column = 6;
-			else if(c == 'H' || c == 'g')
+			else if(c == 'H' || c == 'h')
 				column = 7;
 			else
 			{
@@ -128,17 +128,17 @@ public class battleship
 				column = 0;
 			else if(c == 'B' || c == 'b')
 				column = 1;
-			else if(c == 'C' || c == 'b')
+			else if(c == 'C' || c == 'c')
 				column = 2;
-			else if(c == 'D' || c == 'c')
+			else if(c == 'D' || c == 'd')
 				column = 3;
-			else if(c == 'E' || c == 'd')
+			else if(c == 'E' || c == 'e')
 				column = 4;
-			else if(c == 'F' || c == 'e')
+			else if(c == 'F' || c == 'f')
 				column = 5;
-			else if(c == 'G' || c == 'f')
+			else if(c == 'G' || c == 'g')
 				column = 6;
-			else if(c == 'H' || c == 'g')
+			else if(c == 'H' || c == 'h')
 				column = 7;
 			else
 			{
@@ -295,17 +295,17 @@ public class battleship
 			column = 0;
 		else if(c == 'B' || c == 'b')
 			column = 1;
-		else if(c == 'C' || c == 'b')
+		else if(c == 'C' || c == 'c')
 			column = 2;
-		else if(c == 'D' || c == 'c')
+		else if(c == 'D' || c == 'd')
 			column = 3;
-		else if(c == 'E' || c == 'd')
+		else if(c == 'E' || c == 'e')
 			column = 4;
-		else if(c == 'F' || c == 'e')
+		else if(c == 'F' || c == 'f')
 			column = 5;
-		else if(c == 'G' || c == 'f')
+		else if(c == 'G' || c == 'g')
 			column = 6;
-		else if(c == 'H' || c == 'g')
+		else if(c == 'H' || c == 'h')
 			column = 7;
 		else
 		{
