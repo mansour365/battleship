@@ -67,21 +67,21 @@ public class battleship
 			System.out.println("Enter your letter...");
 			c = kb.next().charAt(0);
 		
-			if(c == 'A')
+			if(c == 'A' || c == 'a')
 				column = 0;
-			else if(c == 'B')
+			else if(c == 'B' || c == 'b')
 				column = 1;
-			else if(c == 'C')
+			else if(c == 'C' || c == 'b')
 				column = 2;
-			else if(c == 'D')
+			else if(c == 'D' || c == 'c')
 				column = 3;
-			else if(c == 'E')
+			else if(c == 'E' || c == 'd')
 				column = 4;
-			else if(c == 'F')
+			else if(c == 'F' || c == 'e')
 				column = 5;
-			else if(c == 'G')
+			else if(c == 'G' || c == 'f')
 				column = 6;
-			else if(c == 'H')
+			else if(c == 'H' || c == 'g')
 				column = 7;
 			else
 			{
@@ -124,21 +124,21 @@ public class battleship
 			System.out.println("\nEnter your letter...");
 			c = kb.next().charAt(0);
 		
-			if(c == 'A')
+			if(c == 'A' || c == 'a')
 				column = 0;
-			else if(c == 'B')
+			else if(c == 'B' || c == 'b')
 				column = 1;
-			else if(c == 'C')
+			else if(c == 'C' || c == 'b')
 				column = 2;
-			else if(c == 'D')
+			else if(c == 'D' || c == 'c')
 				column = 3;
-			else if(c == 'E')
+			else if(c == 'E' || c == 'd')
 				column = 4;
-			else if(c == 'F')
+			else if(c == 'F' || c == 'e')
 				column = 5;
-			else if(c == 'G')
+			else if(c == 'G' || c == 'f')
 				column = 6;
-			else if(c == 'H')
+			else if(c == 'H' || c == 'g')
 				column = 7;
 			else
 			{
@@ -291,21 +291,21 @@ public class battleship
 		int row, column = 0;
 		c = kb.next().charAt(0);
 	
-		if(c == 'A')
+		if(c == 'A' || c == 'a')
 			column = 0;
-		else if(c == 'B')
+		else if(c == 'B' || c == 'b')
 			column = 1;
-		else if(c == 'C')
+		else if(c == 'C' || c == 'b')
 			column = 2;
-		else if(c == 'D')
+		else if(c == 'D' || c == 'c')
 			column = 3;
-		else if(c == 'E')
+		else if(c == 'E' || c == 'd')
 			column = 4;
-		else if(c == 'F')
+		else if(c == 'F' || c == 'e')
 			column = 5;
-		else if(c == 'G')
+		else if(c == 'G' || c == 'f')
 			column = 6;
-		else if(c == 'H')
+		else if(c == 'H' || c == 'g')
 			column = 7;
 		else
 		{
