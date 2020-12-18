@@ -1,23 +1,40 @@
+
 public class driver
 {
 
 	public static void main(String[] args)
 	{
-		int[][] board = new int[8][8];			//Create the board 8 x 8 
+		//create an 8 x 8 board using 2D array of objects 
+		position[][] positionObjects = new position[8][8];
 		
-		battleship b1 = new battleship();
+		//initialize all the objects with default constructor
+		for(int i = 0; i < 8; i++)
+		{
+			for(int j = 0; j < 8; j++)
+			{
+				positionObjects[i][j] = new position();
+			}
+		}
 		
-		b1.initializeboard1(board);
+		//just testing, lets make one of the objects have different stuff
+		//positionObjects[4][4] = new position("ship", "computer", true);
+			
+		battleship.showboard(positionObjects);
 		
-		System.out.println("\nHello, and welcome to Battleship!");
-		System.out.println("\nThis is the battlefeild.\n");
-		b1.showboard(board);
+		battleship.PlaceTokens(positionObjects);
 		
-		b1.PlaceTokens(board);
+		battleship.showboard(positionObjects);
 		
-		b1.showboard(board);
-		
-		b1.userturn(board);
+		battleship.userturn(positionObjects);
+		//display the info of all positions
+//		for(int i = 0; i < 8; i++)
+//		{
+//			for(int j = 0; j < 8; j++)
+//			{
+//				System.out.print("index ["+i+"]["+j+"]   ");
+//				positionObjects[i][j].showData();
+//			}
+//		}
 
 	}
 

@@ -1,40 +1,47 @@
-/**
- *Name: Said-Mansour Maqsoudi	
- *Student ID: 27739656 
- *Comp 249
- *Assignment # 1 
- */
 import java.util.Random;
 import java.util.Scanner;
 public class battleship
 {
-	/** the static variable "yourShip" and "cpuShip" will keep track of how many ships a player has.
-	* the static variable cpu/user ExtraTurns will keep track of extra turns cause by hitting a grenade.
-	*/
-	
-	public static int yourShip = 6, cpuShip = 6;
+	//the static variable "yourShip" and "cpuShip" will keep track of how many ships a player has.
+	//the static variable cpu/user ExtraTurns will keep track of extra turns cause by hitting a grenade.
+	public static int yourShip = 6;
+	public static int cpuShip = 6;
 	public static int cpuExtraTurns = 0;
 	public static int userExtraTurns = 0;
 	
-	
-	
-	/**A method to initialize the board. All positions will start with 0.
-	 * 
-	 * @param board
-	 */
-	public void initializeboard1(int[][] board)
+	//method to show the board
+	public static void showboard(position[][] positionObjects)
 	{
+		System.out.println("\n   A  B  C  D  E  F  G  H");
 		for(int row = 0 ; row < 8 ; row++)
+		{
+			System.out.print((row+1) + "  ");
 			for(int column = 0 ; column < 8 ; column++)
-				board[row][column]= 0;
-		yourShip--;
+			{
+                if(positionObjects[row][column].getCalled() == true){
+                    System.out.print("*"+"  ");
+                }     
+				if(positionObjects[row][column].getType() == "nothing"){
+					System.out.print("-"+"  ");
+				}
+				else if((positionObjects[row][column].getType() == "ship") && (positionObjects[row][column].getOwner() == "user") && (positionObjects[row][column].getCalled() == false)){
+                    System.out.print("B"+"  ");
+                }
+                else if((positionObjects[row][column].getType() == "grenade") && (positionObjects[row][column].getOwner() == "user") && (positionObjects[row][column].getCalled() == false)){
+                    System.out.print("G"+"  ");
+                }     
+                else if((positionObjects[row][column].getType() == "ship") && (positionObjects[row][column].getOwner() == "computer") && (positionObjects[row][column].getCalled() == false)){
+                    System.out.print("b"+"  ");
+                }
+                else if((positionObjects[row][column].getType() == "grenade") && (positionObjects[row][column].getOwner() == "computer") && (positionObjects[row][column].getCalled() == false)){
+                    System.out.print("g"+"  ");
+                }
+			}
+			System.out.println();
+		}
 	}
-
-	/**A method to place your Ships and grenades, as well as randomly place the computer's ships and grenades.
-	 *  
-	 * @param board
-	 */
-	public void PlaceTokens(int[][] board)
+	
+	public static void PlaceTokens(position[][] positionObjects)
 	{
 		char c;
 		int row, column = 0 ;
@@ -45,7 +52,7 @@ public class battleship
 		
 		int s = 0;
 		while(s < 6)
-		{ 
+		{
 			System.out.println("Enter your letter...");
 			c = kb.next().charAt(0);
 		
@@ -81,19 +88,19 @@ public class battleship
 				row = kb.nextInt();
 			}
 		
-			if(board[row-1][column] == 1)
+			if(positionObjects[row-1][column].getType() == "ship")
 			{
 				System.out.println("\nYou have already chosen this coordinate."
 						+ "\nPlease choose a different coordinate");
 				s--;
 			}
 		
-			board[row-1][column] = 1;
+			positionObjects[row-1][column].setType("ship");
+			positionObjects[row-1][column].setOwner("user");
 		
 			s++;
-			showboard(board);
+			showboard(positionObjects);
 		}
-			
 		System.out.println("\nGreat your ships have been placed!"
 				+ "\nYou also have 4 grenades.");
 		System.out.println("Please enter your coordinates"
@@ -138,13 +145,13 @@ public class battleship
 				row = kb.nextInt();
 			}
 		
-			if(board[row-1][column] == 1)
+			if(positionObjects[row-1][column].getType() == "ship")
 			{
 				System.out.println("\nThere is already a ship in this coordinate."
 						+ "Please choose a different coordinate");
 				continue;
 			}
-			else if(board[row-1][column] == 2)
+			else if(positionObjects[row-1][column].getType() == "grenade")
 			{
 				System.out.println("\nYou have already chosen this coordinate."
 						+ "Please choose a different coordinate");
@@ -153,13 +160,14 @@ public class battleship
 			}
 			else
 			{
-				board[row-1][column] = 2;
+				positionObjects[row-1][column].setType("grenade");
+				positionObjects[row-1][column].setOwner("user");
 				g++;
-				showboard(board);
+				showboard(positionObjects);
 			}
 		}
 		System.out.println("\nGreat your positions have been set!");
-		showboard(board);
+		showboard(positionObjects);
 		
 		/**Now we randomly set the computers coordinates.
 		 * 
@@ -171,19 +179,20 @@ public class battleship
 		{
 			int x = rand.nextInt(8);
 			int y = rand.nextInt(8);
-			if(board[x][y] == 1)
+			if((positionObjects[x][y].getType() == "ship") && (positionObjects[x][y].getOwner() == "user"))
 			{
 				continue;
 			}
-			if(board[x][y] == 2)
+			if((positionObjects[x][y].getType() == "grenade") && (positionObjects[x][y].getOwner() == "user"))
 			{
 				continue;
 			}
-			if(board[x][y] == 3)
+			if((positionObjects[x][y].getType() == "ship") && (positionObjects[x][y].getOwner() == "computer"))
 			{
 				i--;
 			}
-			board[x][y]=3;
+			positionObjects[x][y].setType("ship");
+			positionObjects[x][y].setOwner("computer");
 			i++;
 		}
 		
@@ -195,76 +204,36 @@ public class battleship
 		{
 			int x = rand.nextInt(8);
 			int y = rand.nextInt(8);
-			if(board[x][y] == 1 )
+			if((positionObjects[x][y].getType() == "ship") && (positionObjects[x][y].getOwner() == "user"))
 			{
 				continue;
 			}
-			if(board[x][y] == 2 )
+			if((positionObjects[x][y].getType() == "grenade") && (positionObjects[x][y].getOwner() == "user"))
 			{
 				continue;
 			}
-			if(board[x][y] == 3 )
+			if((positionObjects[x][y].getType() == "ship") && (positionObjects[x][y].getOwner() == "computer"))
 			{
 				continue;
 			}
-			if(board[x][y] == 4 )
+			if((positionObjects[x][y].getType() == "grenade") && (positionObjects[x][y].getOwner() == "computer"))
 			{
 				j--;
 			}
 			
-			board[x][y]=4;
+			positionObjects[x][y].setType("grenade");
+			positionObjects[x][y].setOwner("computer");
 			j++;
 		}
 		
-		
+		showboard(positionObjects);
 	}
 	
-	/**A method to show the board
-	 * 
-	 * @param board
-	 */
-	public void showboard(int[][] board)
-	{
-		System.out.println("\n   A  B  C  D  E  F  G  H");
-		for(int row = 0 ; row < 8 ; row++)
-		{
-			System.out.print((row+1) + "  ");
-			for(int column = 0 ; column < 8 ; column++)
-			{
-				if(board[row][column] == 0)
-				{
-					System.out.print("-"+"  ");
-				}
-				else if(board[row][column] == 1)
-                {
-                    System.out.print("B"+"  ");
-                }
-                else if(board[row][column] == 2)
-                {
-                    System.out.print("G"+"  ");
-                }     
-                else if(board[row][column] == 3)
-                {
-                    System.out.print("b"+"  ");
-                }
-                else if(board[row][column] == 4)
-                {
-                    System.out.print("g"+"  ");
-                }
-                else if(board[row][column] == 5)
-                {
-                    System.out.print("*"+"  ");
-                }     
-			}
-			System.out.println();
-		}
-	}
-
 	/**A method for the user's turn
 	 * 
 	 * @param board
 	 */
-	public void userturn(int[][] board)
+	public static void userturn(position[][] positionObjects)
 	{
 		Scanner kb = new Scanner(System.in);
 		System.out.println("Please choose a coordinate to fire a rocket!");
@@ -292,7 +261,7 @@ public class battleship
 		else
 		{
 			System.out.println("\nInvalid Inpout");
-			userturn(board);
+			userturn(positionObjects);
 		}
 	
 		System.out.println("Enter a number from 1 to 8");
@@ -304,83 +273,83 @@ public class battleship
 			row = kb.nextInt();
 		}
 		
-		if(board[row-1][column] == 0 )
+		if(positionObjects[row-1][column].getType() == "nothing")
 		{
 			System.out.println("You missed. ");
-			board[row-1][column] = 5;
-			showboard(board);
+			positionObjects[row-1][column].setCalled(true);
+			showboard(positionObjects);
 			if(userExtraTurns > 0)
 			{
 				userExtraTurns--;
-				userturn(board);
+				userturn(positionObjects);
 			}
-			cputurn(board);
+			cputurn(positionObjects);
 		}
-		else if(board[row-1][column] == 1)
+		else if((positionObjects[row-1][column].getType() == "ship") && (positionObjects[row-1][column].getOwner() == "user"))
 		{
 			System.out.println("You sunk your own ship! ");
-			board[row-1][column] = 5;
-			showboard(board);
+			positionObjects[row-1][column].setCalled(true);
+			showboard(positionObjects);
 			yourShip--;
 			if(yourShip == 0)
 			{
-				youlose(board);
+				youlose(positionObjects);
 			}
 			else if(userExtraTurns > 0)
 			{
 				userExtraTurns--;
-				userturn(board);
+				userturn(positionObjects);
 			}
-			else cputurn(board);
+			else cputurn(positionObjects);
 		}
-		else if(board[row-1][column] == 2)
+		else if((positionObjects[row-1][column].getType() == "grenade") && (positionObjects[row-1][column].getOwner() == "user"))
 		{
 			System.out.println("You destroyed your own grenade! ");
-			board[row-1][column] = 5;
-			showboard(board);
+			positionObjects[row-1][column].setCalled(true);
+			showboard(positionObjects);
 			if(userExtraTurns > 0)
 			{
 				userExtraTurns--;
-				userturn(board);
+				userturn(positionObjects);
 			}
-			cputurn(board);
+			cputurn(positionObjects);
 		}
-		else if(board[row-1][column] == 3)
+		else if((positionObjects[row-1][column].getType() == "ship") && (positionObjects[row-1][column].getOwner() == "computer"))
 		{
 			System.out.println("You sunk your opponents ship! ");
-			board[row-1][column] = 5;
-			showboard(board);
+			positionObjects[row-1][column].setCalled(true);
+			showboard(positionObjects);
 			cpuShip--;
 			if(cpuShip == 0)
 			{
-				youwin(board);
+				youwin(positionObjects);
 			}
 			else if(userExtraTurns > 0)
 			{
 				userExtraTurns--;
-				userturn(board);
+				userturn(positionObjects);
 			}
-			else cputurn(board);
+			else cputurn(positionObjects);
 		}
-		else if(board[row-1][column] == 4)
+		else if((positionObjects[row-1][column].getType() == "grenade") && (positionObjects[row-1][column].getOwner() == "computer"))
 		{
 			System.out.println("You hit a grenade!");
-			board[row-1][column] = 5;
-			showboard(board);
+			positionObjects[row-1][column].setCalled(true);
+			showboard(positionObjects);
 			cpuExtraTurns++;
-			cputurn(board);
+			cputurn(positionObjects);
 		}
-		else if(board[row-1][column] == 5)
+		else if(positionObjects[row-1][column].getCalled() == true)
 		{
 			System.out.println("Position already called.");
-			board[row-1][column] = 5;
-			showboard(board);
+			positionObjects[row-1][column].setCalled(true);
+			showboard(positionObjects);
 			if(userExtraTurns > 0)
 			{
 				userExtraTurns--;
-				userturn(board);
+				userturn(positionObjects);
 			}
-			cputurn(board);
+			cputurn(positionObjects);
 		}
 		
 	}
@@ -389,90 +358,90 @@ public class battleship
 	 * 
 	 * @param board
 	 */
-	public void cputurn(int[][] board)
+	public static void cputurn(position[][] positionObjects)
 	{
 		Random rand = new Random();
 		
 			int x = rand.nextInt(8);
 			int y = rand.nextInt(8);
 		
-			if(board[x][y] == 0)
+			if(positionObjects[x][y].getType() == "nothing")
 			{
-				board[x][y] = 5;
+				positionObjects[x][y].setCalled(true);
 				System.out.println("The opponent missed.");
-				showboard(board);
+				showboard(positionObjects);
 				if(cpuExtraTurns > 0)
 				{
 					cpuExtraTurns--;
-					cputurn(board);
+					cputurn(positionObjects);
 				}
-				userturn(board);
+				userturn(positionObjects);
 			}
-			else if(board[x][y] == 1)
+			else if((positionObjects[x][y].getType() == "ship") && (positionObjects[x][y].getOwner() == "user"))
 			{
-				board[x][y] = 5;
+				positionObjects[x][y].setCalled(true);
 				System.out.println("The opponent sunk your ship.");
-				showboard(board);
+				showboard(positionObjects);
 				yourShip--;
 				if(yourShip == 0)
 				{
-					youlose(board);
+					youlose(positionObjects);
 				}
 				else if(cpuExtraTurns > 0)
 				{
 					cpuExtraTurns--;
-					cputurn(board);
+					cputurn(positionObjects);
 				}
-				else userturn(board);
+				else userturn(positionObjects);
 			}
-			else if(board[x][y] == 2)
+			else if((positionObjects[x][y].getType() == "grenade") && (positionObjects[x][y].getOwner() == "user"))
 			{
-				board[x][y] = 5;
+				positionObjects[x][y].setCalled(true);
 				System.out.println("The opponent hit your grenade. \nYou get two turns!");
-				showboard(board);
+				showboard(positionObjects);
 				userExtraTurns++;
-				userturn(board);
+				userturn(positionObjects);
 			}
-			else if(board[x][y] == 3)
+			else if((positionObjects[x][y].getType() == "ship") && (positionObjects[x][y].getOwner() == "computer"))
 			{
-				board[x][y] = 3;
+				positionObjects[x][y].setCalled(true);
 				System.out.println("Your opponent was confused and accidentally hit their own ship.");
-				showboard(board);
+				showboard(positionObjects);
 				cpuShip--;
 				if(cpuShip == 0)
 				{
-					youwin(board);
+					youwin(positionObjects);
 				}
 				else if(cpuExtraTurns > 0)
 				{
 					cpuExtraTurns--;
-					cputurn(board);
+					cputurn(positionObjects);
 				}
-				else userturn(board);
+				else userturn(positionObjects);
 			}
-			else if(board[x][y] == 4)
+			else if((positionObjects[x][y].getType() == "grenade") && (positionObjects[x][y].getOwner() == "computer"))
 			{
-				board[x][y] = 4;
+				positionObjects[x][y].setCalled(true);
 				System.out.println("Your opponent destroyed their own grenade");
-				showboard(board);
+				showboard(positionObjects);
 				if(cpuExtraTurns > 0)
 				{
 					cpuExtraTurns--;
-					cputurn(board);
+					cputurn(positionObjects);
 				}
-				userturn(board);
+				userturn(positionObjects);
 			}
-			else if(board[x][y] == 5)
+			else if(positionObjects[x][y].getCalled() == true)
 			{
-				board[x][y] = 5;
+				positionObjects[x][y].setCalled(true);
 				System.out.println("The opponent hit a coordinate previously hit");
-				showboard(board);
+				showboard(positionObjects);
 				if(cpuExtraTurns > 0)
 				{
 					cpuExtraTurns--;
-					cputurn(board);
+					cputurn(positionObjects);
 				}
-				userturn(board);
+				userturn(positionObjects);
 			}
 				
 	}
@@ -481,7 +450,7 @@ public class battleship
 	 * 
 	 * @param board
 	 */
-	public void youwin(int[][] board)
+	public static void youwin(position[][] positionObjects)
 	{
 		System.out.println("\n..."
 				+ "\nafter a difficult, but fair game..."
@@ -494,7 +463,7 @@ public class battleship
 	 * 
 	 * @param board
 	 */
-	public void youlose(int[][] board)
+	public static void youlose(position[][] positionObjects)
 	{
 		System.out.println("\n..."
 				+ "\nafter a difficult, but fair game..."
@@ -503,5 +472,6 @@ public class battleship
 		System.exit(0);
 	}
 	
-
+	
+	
 }
