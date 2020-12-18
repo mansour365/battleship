@@ -21,7 +21,7 @@ public class battleship
                 if(positionObjects[row][column].getCalled() == true){
                     System.out.print("*"+"  ");
                 }     
-				if(positionObjects[row][column].getType() == "nothing"){
+                else if(positionObjects[row][column].getType() == "nothing"){
 					System.out.print("-"+"  ");
 				}
 				else if((positionObjects[row][column].getType() == "ship") && (positionObjects[row][column].getOwner() == "user") && (positionObjects[row][column].getCalled() == false)){
@@ -31,10 +31,12 @@ public class battleship
                     System.out.print("G"+"  ");
                 }     
                 else if((positionObjects[row][column].getType() == "ship") && (positionObjects[row][column].getOwner() == "computer") && (positionObjects[row][column].getCalled() == false)){
-                    System.out.print("b"+"  ");
+                    //System.out.print("b"+"  ");
+                	System.out.print("-"+"  ");
                 }
                 else if((positionObjects[row][column].getType() == "grenade") && (positionObjects[row][column].getOwner() == "computer") && (positionObjects[row][column].getCalled() == false)){
-                    System.out.print("g"+"  ");
+                    //System.out.print("g"+"  ");
+                	System.out.print("-"+"  ");
                 }
 			}
 			System.out.println();
@@ -43,106 +45,129 @@ public class battleship
 	
 	public static void PlaceTokens(position[][] positionObjects)
 	{
-		char c;
 		int row, column = 0 ;
 		Scanner kb = new Scanner(System.in);
 		System.out.println("\nRemember you and your opponent will have 6 ships and 4 grenades.");
 		System.out.println("\nLets place your 6 battleships!");
-		System.out.println("Please enter a letter from A to H and a number from 1 to 8.");
-		
+
+
 		int s = 0;
 		while(s < 6)
 		{
-			System.out.println("Enter your letter...");
-			c = kb.next().charAt(0);
-		
-			if(c == 'A' || c == 'a')
+			System.out.println("Please enter a letter from A to H followed by a number from 1 to 8.");
+			
+			String coordinate = kb.nextLine();
+			String input = coordinate.replace(" ", "");
+			
+			//check the length of the string
+			if(input.length() != 2) 
+			{
+				System.out.println("Bad coordinate format");
+				continue;
+			}
+			
+			char ch1 = input.charAt(0);
+			int num1 = Character.getNumericValue(input.charAt(1));
+			
+			//check the letter
+			if(ch1 == 'A' || ch1 == 'a')
 				column = 0;
-			else if(c == 'B' || c == 'b')
+			else if(ch1 == 'B' || ch1 == 'b')
 				column = 1;
-			else if(c == 'C' || c == 'c')
+			else if(ch1 == 'C' || ch1 == 'c')
 				column = 2;
-			else if(c == 'D' || c == 'd')
+			else if(ch1 == 'D' || ch1 == 'd')
 				column = 3;
-			else if(c == 'E' || c == 'e')
+			else if(ch1 == 'E' || ch1 == 'e')
 				column = 4;
-			else if(c == 'F' || c == 'f')
+			else if(ch1 == 'F' || ch1 == 'f')
 				column = 5;
-			else if(c == 'G' || c == 'g')
+			else if(ch1 == 'G' || ch1 == 'g')
 				column = 6;
-			else if(c == 'H' || c == 'h')
+			else if(ch1 == 'H' || ch1 == 'h')
 				column = 7;
 			else
 			{
-				System.out.println("\nInvalid input"
-						+ "\nPlease enter a letter from A to H");
+				System.out.println("Bad coordinate format");
 				continue;
 			}
-		
-			System.out.println("\nEnter your number...");
-			row = kb.nextInt();
-			while(row < 1 || row > 8)
+			
+			//now check the number
+			row = num1;
+			if(row < 1 || row > 8)
 			{
-				System.out.println("\nInvalid input."
-						+ "\nPlease enter a number from 1 to 8.");
-				row = kb.nextInt();
+				System.out.println("Bad coordinate format");
+				continue;
 			}
-		
+			
 			if(positionObjects[row-1][column].getType() == "ship")
 			{
 				System.out.println("\nYou have already chosen this coordinate."
 						+ "\nPlease choose a different coordinate");
 				s--;
 			}
-		
+			
 			positionObjects[row-1][column].setType("ship");
 			positionObjects[row-1][column].setOwner("user");
-		
+			
 			s++;
 			showboard(positionObjects);
+			
 		}
+		
+
 		System.out.println("\nGreat your ships have been placed!"
 				+ "\nYou also have 4 grenades.");
-		System.out.println("Please enter your coordinates"
-				+ " to place yours grenades."
-				+ "A letter from A to H and a number from 1 to 8");
-		
+		System.out.println("Now lets place your grenades");
+				
 		int g = 0;
 		while(g < 4)
 		{ 
-			System.out.println("\nEnter your letter...");
-			c = kb.next().charAt(0);
+			System.out.println("Please enter a letter from A to H followed by a number from 1 to 8.");
+			
+			String coordinate = kb.nextLine();
+			String input = coordinate.replace(" ", "");
+			
+			//check the length of the string
+			if(input.length() != 2) 
+			{
+				System.out.println("Bad coordinate format");
+				continue;
+			}
+			
+			char ch1 = input.charAt(0);
+			int num1 = Character.getNumericValue(input.charAt(1));
+
 		
-			if(c == 'A' || c == 'a')
+			//check the letter
+			if(ch1 == 'A' || ch1 == 'a')
 				column = 0;
-			else if(c == 'B' || c == 'b')
+			else if(ch1 == 'B' || ch1 == 'b')
 				column = 1;
-			else if(c == 'C' || c == 'c')
+			else if(ch1 == 'C' || ch1 == 'c')
 				column = 2;
-			else if(c == 'D' || c == 'd')
+			else if(ch1 == 'D' || ch1 == 'd')
 				column = 3;
-			else if(c == 'E' || c == 'e')
+			else if(ch1 == 'E' || ch1 == 'e')
 				column = 4;
-			else if(c == 'F' || c == 'f')
+			else if(ch1 == 'F' || ch1 == 'f')
 				column = 5;
-			else if(c == 'G' || c == 'g')
+			else if(ch1 == 'G' || ch1 == 'g')
 				column = 6;
-			else if(c == 'H' || c == 'h')
+			else if(ch1 == 'H' || ch1 == 'h')
 				column = 7;
 			else
 			{
-				System.out.println("\nInvalid input"
-						+ "\nPlease enter a letter from A to H");
+				System.out.println("Bad coordinate format");
 				continue;
 			}
-		
-			System.out.println("Enter your number...");
-			row = kb.nextInt();
-			while(row < 1 || row > 8)
+			
+			//now check the number
+			row = num1;
+			if(row < 1 || row > 8)
 			{
-				System.out.println("\nInvalid input."
-						+ "\nPlease enter a number from 1 to 8.");
-				row = kb.nextInt();
+				System.out.println("Bad coordinate format");
+				continue;
 			}
 		
 			if(positionObjects[row-1][column].getType() == "ship")
@@ -151,13 +176,14 @@ public class battleship
 						+ "Please choose a different coordinate");
 				continue;
 			}
+			
 			else if(positionObjects[row-1][column].getType() == "grenade")
 			{
 				System.out.println("\nYou have already chosen this coordinate."
 						+ "Please choose a different coordinate");
 				continue;
-				
 			}
+			
 			else
 			{
 				positionObjects[row-1][column].setType("grenade");
@@ -167,12 +193,10 @@ public class battleship
 			}
 		}
 		System.out.println("\nGreat your positions have been set!");
-		showboard(positionObjects);
+		//showboard(positionObjects);
 		
-		/**Now we randomly set the computers coordinates.
-		 * 
-		 */
-		
+
+		//Randomly set the computer's coordinates
 		Random rand = new Random();
 		int i = 0;
 		while(i < 6)
@@ -196,9 +220,7 @@ public class battleship
 			i++;
 		}
 		
-		/**Now randomly generate grenades
-		 * 
-		 */
+		//Randomly generate grenades
 		int j =0;
 		while(j < 4)
 		{
@@ -226,52 +248,67 @@ public class battleship
 			j++;
 		}
 		
-		showboard(positionObjects);
+		//showboard(positionObjects);
 	}
 	
-	/**A method for the user's turn
-	 * 
-	 * @param board
-	 */
+	//method for the users turn
 	public static void userturn(position[][] positionObjects)
 	{
+		int row = 0, column = 0;
 		Scanner kb = new Scanner(System.in);
 		System.out.println("Please choose a coordinate to fire a rocket!");
-		System.out.println("Enter a letter from A to H");
-		char c;
-		int row, column = 0;
-		c = kb.next().charAt(0);
-	
-		if(c == 'A' || c == 'a')
-			column = 0;
-		else if(c == 'B' || c == 'b')
-			column = 1;
-		else if(c == 'C' || c == 'c')
-			column = 2;
-		else if(c == 'D' || c == 'd')
-			column = 3;
-		else if(c == 'E' || c == 'e')
-			column = 4;
-		else if(c == 'F' || c == 'f')
-			column = 5;
-		else if(c == 'G' || c == 'g')
-			column = 6;
-		else if(c == 'H' || c == 'h')
-			column = 7;
-		else
+		
+		boolean goodValue = false;
+		
+		while(goodValue == false)
 		{
-			System.out.println("\nInvalid Inpout");
-			userturn(positionObjects);
+			System.out.println("Please enter a letter from A to H followed by a number from 1 to 8.");
+			String coordinate = kb.nextLine();
+			String input = coordinate.replace(" ", "");
+			
+			//check the length of the string
+			if(input.length() != 2) 
+			{
+				System.out.println("Bad coordinate format");
+				continue;
+			}
+			
+			char ch1 = input.charAt(0);
+			int num1 = Character.getNumericValue(input.charAt(1));
+			
+			//check the letter
+			if(ch1 == 'A' || ch1 == 'a')
+				column = 0;
+			else if(ch1 == 'B' || ch1 == 'b')
+				column = 1;
+			else if(ch1 == 'C' || ch1 == 'c')
+				column = 2;
+			else if(ch1 == 'D' || ch1 == 'd')
+				column = 3;
+			else if(ch1 == 'E' || ch1 == 'e')
+				column = 4;
+			else if(ch1 == 'F' || ch1 == 'f')
+				column = 5;
+			else if(ch1 == 'G' || ch1 == 'g')
+				column = 6;
+			else if(ch1 == 'H' || ch1 == 'h')
+				column = 7;
+			else
+			{
+				System.out.println("Bad coordinate format");
+				continue;
+			}
+			
+			//now check the number
+			row = num1;
+			if(row < 1 || row > 8)
+			{
+				System.out.println("Bad coordinate format");
+				continue;
+			}
+			goodValue = true;
 		}
-	
-		System.out.println("Enter a number from 1 to 8");
-		row = kb.nextInt();
-		while(row < 1 || row > 8)
-		{
-			System.out.println("Invalid input."
-					+ "\nPlease enter a number from 1 to 8.");
-			row = kb.nextInt();
-		}
+		
 		
 		if(positionObjects[row-1][column].getType() == "nothing")
 		{
@@ -354,10 +391,7 @@ public class battleship
 		
 	}
 	
-	/**A method for the opponent's turn
-	 * 
-	 * @param board
-	 */
+	//method for the opponents turn
 	public static void cputurn(position[][] positionObjects)
 	{
 		Random rand = new Random();
@@ -446,10 +480,7 @@ public class battleship
 				
 	}
 	
-	/**A method if you win the game
-	 * 
-	 * @param board
-	 */
+	//method if you win the game
 	public static void youwin(position[][] positionObjects)
 	{
 		System.out.println("\n..."
@@ -459,10 +490,7 @@ public class battleship
 		System.exit(0);
 	}
 		
-	/**A method if you lose the game
-	 * 
-	 * @param board
-	 */
+	//method if you lose the game
 	public static void youlose(position[][] positionObjects)
 	{
 		System.out.println("\n..."

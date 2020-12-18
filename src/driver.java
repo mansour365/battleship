@@ -23,7 +23,7 @@ public class driver
 		
 		battleship.PlaceTokens(positionObjects);
 		
-		battleship.showboard(positionObjects);
+		//battleship.showboard(positionObjects);
 		
 		battleship.userturn(positionObjects);
 		//display the info of all positions
