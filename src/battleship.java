@@ -193,7 +193,7 @@ public class battleship
 			}
 		}
 		System.out.println("\nGreat your positions have been set!");
-		//showboard(positionObjects);
+
 		
 
 		//Randomly set the computer's coordinates
@@ -247,8 +247,7 @@ public class battleship
 			positionObjects[x][y].setOwner("computer");
 			j++;
 		}
-		
-		//showboard(positionObjects);
+
 	}
 	
 	//method for the users turn
