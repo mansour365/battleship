@@ -15,6 +15,8 @@ public class driver
 				positionObjects[i][j] = new position();
 			}
 		}
+		
+		battleship.chooseDifficulty();
 			
 		battleship.showboard(positionObjects);
 		

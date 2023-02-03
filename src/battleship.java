@@ -8,6 +8,8 @@ public class battleship
 	public static int cpuShip = 6;
 	public static int cpuExtraTurns = 0;
 	public static int userExtraTurns = 0;
+	public static boolean Easy = false;
+	public static boolean Normal = false;
 	
 	//method to show the board
 	public static void showboard(position[][] positionObjects)
@@ -43,6 +45,37 @@ public class battleship
 		}
 	}
 	
+	public static void chooseDifficulty()
+	{
+		boolean difficultyChosen = false;
+		Scanner kb = new Scanner(System.in);
+		while(difficultyChosen == false)
+		{
+			System.out.println("Welcome to battleship! \n");
+			System.out.println("Choose difficulty (Enter either 1 or 2)");
+			System.out.println("1 for Easy");
+			System.out.println("2 for Normal");
+			int num = kb.nextInt();
+			
+			if(num == 1){
+				Easy = true;
+				difficultyChosen = true;
+				System.out.println("Easy mode selected\n");
+			}
+			else if(num == 2){
+				Normal = true;
+				difficultyChosen = true;
+				System.out.println("Normal mode selected\n");
+			}
+			else {
+				System.out.println("You need to enter either 1 or 2. Try Again.");
+				continue;
+			}
+		}
+		
+		
+	}
+	
 	public static void PlaceTokens(position[][] positionObjects)
 	{
 		int row, column = 0 ;
@@ -57,7 +90,7 @@ public class battleship
 			System.out.println("Please enter a letter from A to H followed by a number from 1 to 8.");
 			
 			String coordinate = kb.nextLine();
-			String input = coordinate.replace(" ", "");
+			String input = coordinate.replace(" ", ""); //remove all spaces from coordinates
 			
 			//check the length of the string
 			if(input.length() != 2) 
@@ -126,7 +159,7 @@ public class battleship
 			System.out.println("Please enter a letter from A to H followed by a number from 1 to 8.");
 			
 			String coordinate = kb.nextLine();
-			String input = coordinate.replace(" ", "");
+			String input = coordinate.replace(" ", ""); //remove all spaces from coordinates
 			
 			//check the length of the string
 			if(input.length() != 2) 
@@ -395,8 +428,36 @@ public class battleship
 	{
 		Random rand = new Random();
 		
+		//opponent generating coordinates for their missile
 			int x = rand.nextInt(8);
 			int y = rand.nextInt(8);
+			
+			boolean badCoordinates = false;
+			
+			
+			//If normal mode is on, check if random coordinates match any of their own ship or grenades
+			//if it does match then generate a new random coordinate
+			if(Normal == true)
+			{
+				if(positionObjects[x][y].getOwner() == "computer")
+				{
+					badCoordinates = true;
+				}
+				while(badCoordinates == true)
+				{
+					x = rand.nextInt(8);
+					y = rand.nextInt(8);
+					if(positionObjects[x][y].getOwner() == "computer")
+					{
+						continue;
+					}
+					else {
+						badCoordinates = false;
+					}
+				}
+			}
+			
+			
 		
 			if(positionObjects[x][y].getType() == "nothing")
 			{
